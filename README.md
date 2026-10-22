@@ -1,5 +1,7 @@
 # Archivo PS4
 
+[![tests](https://github.com/SrManguera-debug/archivo-ps4/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/SrManguera-debug/archivo-ps4/actions/workflows/tests.yml)
+
 Panel privado para explorar una biblioteca de PKGs de PS4 y enviarlos a una o
 varias consolas por la red local usando **GoldHen + Remote Package Installer
 (RPI)**. No usa USB ni discos externos: los PKGs se sirven con nginx y la PS4
