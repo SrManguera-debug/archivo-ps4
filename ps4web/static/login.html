@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#17191c">
+  <title>Entrar · Archivo PS4</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="login-page">
+  <main class="login-shell">
+    <section class="login-brand-panel" aria-label="Archivo PS4">
+      <div class="login-brand-top">
+        <div class="brand-mark" aria-hidden="true">PS<span>4</span></div>
+        <div>
+          <strong>Archivo PS4</strong>
+          <span>Servidor privado · LAN</span>
+        </div>
+      </div>
+
+      <div class="login-claim">
+        <p class="eyebrow">GoldHen · Remote Package Installer</p>
+        <h1>Tu biblioteca,<br>en la consola.</h1>
+        <p>Un archivo para encontrar tus PKGs, leer sus metadatos y enviarlos a la PS4 por la red. Sin cables, sin discos, sin vueltas.</p>
+        <div class="login-features" aria-label="Funciones">
+          <span>Iconos y SFO</span>
+          <span>Cola por consola</span>
+          <span>Pausa y reanudación</span>
+          <span>Extracción RAR</span>
+        </div>
+      </div>
+
+      <div class="login-brand-foot">
+        <span>Biblioteca local · 192.168.x.x</span>
+        <span>v1.0.0</span>
+      </div>
+    </section>
+
+    <section class="login-form-panel">
+      <div class="login-form-wrap">
+        <p class="eyebrow">Acceso</p>
+        <h2>Entrar al archivo</h2>
+        <p class="login-intro">Ingresá la contraseña del servidor para administrar consolas, paquetes y trabajos.</p>
+
+        <form id="login-form" class="login-form">
+          <label for="password">
+            Contraseña
+            <span class="login-field">
+              <input id="password" name="password" type="password" autocomplete="current-password" required autofocus spellcheck="false">
+              <button id="toggle-password" type="button" aria-label="Mostrar contraseña" title="Mostrar contraseña">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>
+              </button>
+            </span>
+          </label>
+          <button id="login-submit" class="button primary" type="submit">Entrar</button>
+          <p id="login-error" class="login-error" role="alert"></p>
+        </form>
+
+        <p class="login-note">
+          <span class="lock" aria-hidden="true"></span>
+          La sesión queda en esta red local. El servidor no se expone a internet.
+        </p>
+      </div>
+
+      <div class="login-meta">
+        <span>Archivo PS4 · sesión privada</span>
+        <span id="login-year">2026</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/login.js"></script>
+</body>
+</html>

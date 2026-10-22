@@ -1,0 +1,35 @@
+[Unit]
+Description=Archivo PS4 · biblioteca e instalador de PKGs por LAN
+Documentation=file:///opt/ps4web/README.md
+After=network-online.target nginx.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/ps4web
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 -m ps4web serve --config /etc/ps4web/config.json
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=25
+KillSignal=SIGTERM
+UMask=0022
+
+# The library is the only media path the app writes to; state lives in /var.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+ReadWritePaths=/mnt/juegos_ps4/descargas /var/lib/ps4web
+
+[Install]
+WantedBy=multi-user.target

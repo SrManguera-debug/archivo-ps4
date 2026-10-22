@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#17191c">
+  <title>Archivo PS4</title>
+  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido</a>
+
+  <div id="boot" class="boot" role="status" aria-live="polite">
+    <div class="boot-mark" aria-hidden="true">PS<span>4</span></div>
+    <p class="eyebrow">Archivo personal</p>
+    <h1>Abriendo la biblioteca</h1>
+    <div class="boot-line"><span></span></div>
+  </div>
+
+  <div id="fatal" class="fatal" hidden>
+    <p class="eyebrow">Error de conexión</p>
+    <h1>No se pudo abrir el archivo.</h1>
+    <p id="fatal-message">Revisá que el servidor esté funcionando.</p>
+    <a class="button primary" href="/login">Volver a entrar</a>
+  </div>
+
+  <div id="app" class="app" hidden>
+    <div id="rail-backdrop" class="rail-backdrop" hidden></div>
+
+    <aside class="rail" aria-label="Consolas y estado del servidor">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">PS<span>4</span></div>
+        <div class="brand-copy">
+          <p class="eyebrow">Archivo personal</p>
+          <h1>Biblioteca</h1>
+        </div>
+      </div>
+
+      <section class="rail-section console-section" aria-labelledby="consoles-label">
+        <div class="section-head">
+          <h2 id="consoles-label">Consolas</h2>
+          <button id="btn-add-console" class="icon-button light" type="button" title="Agregar consola" aria-label="Agregar consola">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+        <div id="console-list" class="console-list"></div>
+        <button id="btn-discover" class="ghost-button dark" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+          Buscar en la red
+        </button>
+      </section>
+
+      <div class="rail-spacer"></div>
+
+      <section class="rail-meta" aria-label="Estado del servidor">
+        <div class="meta-row">
+          <span>Servidor</span>
+          <strong id="meta-server">—</strong>
+        </div>
+        <div class="meta-row">
+          <span>Biblioteca</span>
+          <strong id="meta-library" title="">—</strong>
+        </div>
+        <div class="disk">
+          <div class="disk-copy">
+            <span>Disco</span>
+            <strong id="meta-disk">—</strong>
+          </div>
+          <div class="disk-track" aria-hidden="true"><span id="meta-disk-bar"></span></div>
+        </div>
+        <div class="meta-actions">
+          <span id="meta-version" class="mono">v1.0.0</span>
+          <button id="btn-logout" class="text-button light" type="button">Salir</button>
+        </div>
+      </section>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <button id="btn-menu" class="icon-button mobile-menu" type="button" aria-label="Abrir menú de consolas" aria-expanded="false">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="topbar-title">
+          <p class="eyebrow" id="console-eyebrow">Sin consola</p>
+          <h2 id="console-title">Elegí una consola</h2>
+        </div>
+        <div class="topbar-actions">
+          <button id="btn-console-edit" class="firmware-chip" type="button" title="Editar consola">
+            <span class="status-dot" id="top-status-dot"></span>
+            <span id="firmware-chip">FW —</span>
+          </button>
+          <button id="btn-queue" class="queue-button" type="button" aria-haspopup="dialog" aria-controls="queue-drawer">
+            Cola
+            <span id="queue-count" class="count">0</span>
+          </button>
+        </div>
+      </header>
+
+      <main id="main-content" class="content">
+        <div id="disk-alert" class="disk-alert" role="alert" hidden>
+          <div class="disk-alert-copy">
+            <p class="disk-alert-kicker">Almacenamiento</p>
+            <p><strong id="disk-alert-title">Disco casi lleno</strong> <span id="disk-alert-text"></span></p>
+          </div>
+          <button id="disk-alert-action" class="button secondary" type="button">Revisar biblioteca</button>
+        </div>
+        <section class="hero" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="eyebrow">Biblioteca</p>
+            <h1 id="hero-title">PKGs en el servidor</h1>
+            <p class="hero-note" id="hero-note">Elegí una carpeta para ver los paquetes disponibles.</p>
+          </div>
+          <div class="hero-stats" aria-label="Resumen de la carpeta">
+            <div class="hero-stat">
+              <strong id="hero-count">—</strong>
+              <span>PKGs acá</span>
+            </div>
+            <div class="hero-stat">
+              <strong id="hero-dirs">—</strong>
+              <span>carpetas</span>
+            </div>
+            <div class="hero-stat">
+              <strong id="hero-size">—</strong>
+              <span>en esta vista</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="browser" aria-labelledby="browser-title">
+          <h2 id="browser-title" class="visually-hidden">Explorador de archivos</h2>
+          <div class="browser-head">
+            <nav id="breadcrumb" class="breadcrumb" aria-label="Ruta de la biblioteca"></nav>
+            <div class="browser-tools">
+              <label class="search-field">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+                <span class="visually-hidden">Buscar en esta carpeta</span>
+                <input id="search" type="search" placeholder="Buscar título, CUSA o archivo" autocomplete="off">
+              </label>
+              <button id="btn-refresh" class="icon-button" type="button" title="Actualizar" aria-label="Actualizar carpeta">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="selection-bar">
+            <label class="check-label">
+              <input id="select-all" type="checkbox">
+              <span>Seleccionar todo</span>
+            </label>
+            <label class="switch-label" title="Al instalar una carpeta, incluye también sus DLC">
+              <input id="include-dlc" type="checkbox">
+              <span class="switch" aria-hidden="true"></span>
+              <span>Incluir DLC</span>
+            </label>
+            <span id="selection-count" class="selection-count">Nada seleccionado</span>
+            <button id="btn-delete-selected" class="button danger delete-selection-button" type="button" disabled>
+              Eliminar seleccionados
+            </button>
+            <button id="btn-install" class="button primary install-button" type="button" disabled>
+              Instalar en <span id="install-console">—</span>
+            </button>
+          </div>
+
+          <div id="file-list" class="file-list" role="list" aria-live="polite"></div>
+          <div id="empty-state" class="empty-state" hidden>
+            <p class="eyebrow">Carpeta vacía</p>
+            <h2>Acá no hay nada para instalar.</h2>
+            <p id="empty-hint">Probá con otra carpeta o extraé un archivo comprimido.</p>
+          </div>
+          <div id="file-loading" class="file-loading" hidden>
+            <span class="spinner" aria-hidden="true"></span>
+            Leyendo la carpeta…
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+
+    <aside id="queue-drawer" class="drawer queue-drawer" role="dialog" aria-modal="true" aria-labelledby="queue-title" aria-hidden="true">
+      <header class="drawer-head">
+        <div>
+          <p class="eyebrow">Actividad</p>
+          <h2 id="queue-title">Cola de trabajos</h2>
+        </div>
+        <button class="icon-button drawer-close" type="button" data-close-drawer="queue" aria-label="Cerrar cola">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </header>
+      <div class="queue-toolbar">
+        <div class="segmented" role="group" aria-label="Filtrar cola">
+          <button id="queue-filter-console" class="segment active" type="button">Esta consola</button>
+          <button id="queue-filter-all" class="segment" type="button">Todas</button>
+        </div>
+        <div class="queue-toolbar-actions">
+          <a id="queue-link" class="text-button" href="#" hidden>Ver todo</a>
+          <button id="btn-clear-queue" class="text-button danger queue-clear-button" type="button" disabled>Limpiar cola</button>
+        </div>
+      </div>
+      <div id="queue-list" class="queue-list"></div>
+      <div id="queue-empty" class="queue-empty" hidden>
+        <p class="eyebrow">Todo tranquilo</p>
+        <h3>La cola está vacía.</h3>
+        <p>Seleccioná un PKG y mandate a instalar. Acá vas a ver el progreso.</p>
+      </div>
+    </aside>
+
+    <aside id="detail-drawer" class="drawer detail-drawer" role="dialog" aria-modal="true" aria-labelledby="detail-title" aria-hidden="true">
+      <header class="drawer-head">
+        <div>
+          <p class="eyebrow" id="detail-kicker">Paquete</p>
+          <h2 id="detail-title">Detalle</h2>
+        </div>
+        <button class="icon-button drawer-close" type="button" data-close-drawer="detail" aria-label="Cerrar detalle">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </header>
+      <div id="detail-body" class="detail-body"></div>
+    </aside>
+
+    <dialog id="console-dialog" class="modal console-modal" aria-labelledby="console-dialog-title">
+      <form id="console-form" novalidate>
+        <header class="modal-head">
+          <div>
+            <p class="eyebrow">Consola</p>
+            <h2 id="console-dialog-title">Agregar PS4</h2>
+          </div>
+          <button class="icon-button modal-close" type="button" data-close-modal="console" aria-label="Cerrar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          </button>
+        </header>
+
+        <div class="modal-body">
+          <div class="form-grid">
+            <label class="field">
+              <span>Nombre</span>
+              <input id="console-name" name="name" maxlength="64" required placeholder="PS4 del salón">
+            </label>
+            <label class="field">
+              <span>Dirección IP</span>
+              <input id="console-ip" name="ip" inputmode="decimal" required placeholder="192.168.1.50">
+            </label>
+            <label class="field">
+              <span>Puerto RPI</span>
+              <input id="console-rpi-port" name="rpi_port" type="number" min="1" max="65535" value="12800" required>
+            </label>
+            <label class="field">
+              <span>Puerto FTP</span>
+              <input id="console-ftp-port" name="ftp_port" type="number" min="1" max="65535" value="2121" required>
+            </label>
+            <label class="field">
+              <span>Firmware <em>opcional</em></span>
+              <input id="console-firmware" name="firmware" placeholder="9.00" pattern="\d{1,2}(\.\d{1,2}){0,2}">
+            </label>
+            <label class="field field-wide">
+              <span>Notas <em>opcional</em></span>
+              <input id="console-notes" name="notes" maxlength="500" placeholder="GoldHen activo, TV del living…">
+            </label>
+          </div>
+
+          <div class="discovery-panel">
+            <div class="discovery-head">
+              <div>
+                <h3>Encontrar en la red</h3>
+                <p>Busca puertos de RPI, FTP y Remote Play en la subred configurada.</p>
+              </div>
+              <button id="btn-discover-console" class="button secondary small" type="button">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>
+                Buscar
+              </button>
+            </div>
+            <div id="discovery-results" class="discovery-results"></div>
+          </div>
+
+          <p id="console-form-error" class="form-error" role="alert"></p>
+        </div>
+
+        <footer class="modal-foot">
+          <button id="btn-delete-console" class="text-button danger" type="button" hidden>Eliminar consola</button>
+          <button id="btn-prepare-rpi" class="text-button" type="button" hidden>Preparar RPI por FTP</button>
+          <div class="modal-spacer"></div>
+          <button class="button secondary" type="button" data-close-modal="console">Cancelar</button>
+          <button id="btn-save-console" class="button primary" type="submit">Guardar consola</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <dialog id="confirm-dialog" class="modal confirm-modal" aria-labelledby="confirm-title">
+      <div class="modal-head">
+        <div>
+          <p class="eyebrow" id="confirm-kicker">Confirmar</p>
+          <h2 id="confirm-title">¿Continuar?</h2>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p id="confirm-message"></p>
+        <div id="confirm-detail" class="confirm-detail" hidden></div>
+      </div>
+      <footer class="modal-foot">
+        <div class="modal-spacer"></div>
+        <button id="confirm-alt" class="button danger" type="button" hidden></button>
+        <button id="confirm-cancel" class="button secondary" type="button">Cancelar</button>
+        <button id="confirm-accept" class="button primary" type="button">Continuar</button>
+      </footer>
+    </dialog>
+
+    <div id="toasts" class="toasts" aria-live="polite" aria-atomic="false"></div>
+  </div>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

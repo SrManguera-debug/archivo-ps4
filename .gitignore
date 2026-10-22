@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.venv-*/
+.pytest_cache/
+.DS_Store
+*.log
+/tmp/
+
+# Configuración y estado locales (nunca versionar credenciales)
+config.json
+config.local.json
+ps4web-initial-credentials.txt
+
+# PKGs y archivos de prueba locales
+*.pkg
+*.rar
+*.7z
+*.zip
